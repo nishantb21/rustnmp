@@ -1,6 +1,9 @@
 use std::net::{UdpSocket, SocketAddr};
-use std::str;
 use std::io;
+
+struct DataGram {
+    
+}
 
 fn main() -> io::Result<()> {
     // Define the address and port to listen on.
@@ -17,11 +20,9 @@ fn main() -> io::Result<()> {
         let (bytes_received, src_addr) = socket.recv_from(&mut buf)?;
         println!("Received {} bytes from {}", bytes_received, src_addr);
 
-        // Convert the received bytes to a string (assuming it's UTF-8).
-        if let Ok(msg) = str::from_utf8(&buf[..bytes_received]) {
-            println!("Message: {}", msg);
-        } else {
-            println!("Received non-UTF8 data");
+        for message_component in buf.iter() {
+            print!("{:x} ", message_component);
         }
+        println!();
     }
 }
